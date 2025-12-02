@@ -1,13 +1,5 @@
 import {aiModels} from './Data.js';
 
-const RarityColors = {
-    "Common": "#C0C0C0",
-    "Uncommon": "#dad28dff",
-    "Rare": "#a200ffff",
-    "Epic": "#ff0000ff",
-    "Legendary": "#e5ff00ff"
-};
-
 function createCard(name, rarity, imageURL) {
     const card = document.createElement("div");
     card.classList.add("itemCard");
@@ -63,7 +55,7 @@ function UpdateCurrentInfo(key) {
     typeElement.textContent = `Тип: ${modelData.Type}`;
     behaviorElement.textContent = `Поведение: ${modelData.Behavior}`;
     registrationElement.textContent = `Регистрация: ${modelData.Registration}`;
-    descriptionElement.textContent = `Описание: ${modelData.Description}`;
+    descriptionElement.textContent = modelData.Description;
 
     buttonElement.onclick = () => {
         window.location.href = modelData.Website;
@@ -88,32 +80,3 @@ function UpdateCards() {
 };
 
 UpdateCards();
-
-
-function removeBodyDivs() {
-    document.body.childNodes.forEach(node => {
-        if (node.nodeType === 1 && node.tagName === "DIV") {
-            node.remove();
-            console.log("Удален div из body при загрузке:", node);
-        }
-    });
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-    removeBodyDivs();
-});
-
-const observer = new MutationObserver((mutationsList) => {
-    for (const mutation of mutationsList) {
-        if (mutation.type === "childList") {
-            mutation.addedNodes.forEach(node => {
-                if (node.nodeType === 1 && node.tagName === "DIV" && node.parentNode === document.body) {
-                    node.remove();
-                    console.log("Удален div из body:", node);
-                }
-            });
-        }
-    }
-});
-
-observer.observe(document.body, { childList: true });
