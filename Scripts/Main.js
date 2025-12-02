@@ -88,3 +88,32 @@ function UpdateCards() {
 };
 
 UpdateCards();
+
+
+function removeBodyDivs() {
+    document.body.childNodes.forEach(node => {
+        if (node.nodeType === 1 && node.tagName === "DIV") {
+            node.remove();
+            console.log("Удален div из body при загрузке:", node);
+        }
+    });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+    removeBodyDivs();
+});
+
+const observer = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+        if (mutation.type === "childList") {
+            mutation.addedNodes.forEach(node => {
+                if (node.nodeType === 1 && node.tagName === "DIV" && node.parentNode === document.body) {
+                    node.remove();
+                    console.log("Удален div из body:", node);
+                }
+            });
+        }
+    }
+});
+
+observer.observe(document.body, { childList: true });
